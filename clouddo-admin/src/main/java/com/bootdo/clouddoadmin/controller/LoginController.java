@@ -1,5 +1,6 @@
 package com.bootdo.clouddoadmin.controller;
 
+import com.bootdo.clouddoadmin.domain.MenuDO;
 import com.bootdo.clouddoadmin.domain.UserDO;
 import com.bootdo.clouddoadmin.service.MenuService;
 import com.bootdo.clouddoadmin.service.TokenService;
@@ -7,8 +8,10 @@ import com.bootdo.clouddoadmin.service.UserService;
 import com.bootdo.clouddoadmin.utils.MD5Utils;
 import com.bootdo.clouddocommon.annotation.Log;
 import com.bootdo.clouddocommon.context.FilterContextHandler;
+import com.bootdo.clouddocommon.dto.LogDO;
 import com.bootdo.clouddocommon.dto.LoginDTO;
 import com.bootdo.clouddocommon.dto.UserToken;
+import com.bootdo.clouddocommon.service.LogRpcService;
 import com.bootdo.clouddocommon.utils.JwtUtils;
 import com.bootdo.clouddocommon.utils.R;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -23,6 +26,10 @@ import java.util.List;
 import java.util.Map;
 
 /**
+ * 分布式事务
+ * https://blog.csdn.net/zhangxing52077/article/details/81587988
+ * demo
+ * https://github.com/codingapi/springcloud-lcn-demo
  * @author bootdo 1992lcg@163.com
  * @version V1.0
  */
@@ -35,10 +42,18 @@ public class LoginController {
     TokenService tokenService;
     @Autowired
     MenuService menuService;
-
+    @Autowired
+    LogRpcService logRpcService;
     @Log("登录")
     @PostMapping("/login")
     R login(@Valid @RequestBody LoginDTO loginDTO, HttpServletRequest request, HttpServletResponse response) {
+        MenuDO menuDo = new MenuDO();
+        menuDo.setName("wph");
+        menuService.save(menuDo);
+        int i=1/0;
+        LogDO logDO =  new LogDO();
+        logDO.setOperation("事务");
+        logRpcService.save(logDO);
         String username = loginDTO.getUsername().trim();
         String password = loginDTO.getPwd().trim();
         password = MD5Utils.encrypt(username, password);

@@ -12,7 +12,7 @@ public class FeignIntercepter implements RequestInterceptor {
 
     @Override
     public void apply(RequestTemplate requestTemplate) {
-        logger.info("------feign设置token" + Thread.currentThread().getId());
+        logger.info("------feign设置token" + Thread.currentThread().getId()+",token的值："+FilterContextHandler.getToken());
         requestTemplate.header(CommonConstants.CONTEXT_TOKEN, FilterContextHandler.getToken());
     }
 }

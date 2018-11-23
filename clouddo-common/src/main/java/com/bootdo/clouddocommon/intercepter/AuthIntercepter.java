@@ -20,7 +20,7 @@ public class AuthIntercepter extends HandlerInterceptorAdapter {
         String token = request.getHeader(CommonConstants.CONTEXT_TOKEN);
         UserToken userToken = JwtUtils.getInfoFromToken(token);
         FilterContextHandler.setToken(token);
-        logger.info("------设置token"+Thread.currentThread().getId());
+        logger.info("------设置token"+Thread.currentThread().getId()+",token的值："+token);
         FilterContextHandler.setUsername(userToken.getUsername());
         FilterContextHandler.setName(userToken.getName());
         FilterContextHandler.setUserID(userToken.getUserId());

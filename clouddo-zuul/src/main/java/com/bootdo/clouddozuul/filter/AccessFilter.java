@@ -23,8 +23,8 @@ import java.util.List;
 import java.util.Set;
 
 /**
- * @version V1.0
- * @Author bootdo 1992lcg@163.com
+ * zuul网关过滤器
+ * @Author
  */
 public class AccessFilter extends ZuulFilter {
     @Autowired
@@ -32,23 +32,32 @@ public class AccessFilter extends ZuulFilter {
 
 
     private String ignorePath = "/api-admin/login";
-
+    /**
+     * 过滤器类型
+     * 顺序: pre ->routing -> post ,以上3个顺序出现异常时都可以触发error类型的filter
+     */
     @Override
     public String filterType() {
         return "pre";
     }
-
+    /**
+     * 同filterType类型中，order值越大，优先级越低
+     */
     @Override
     public int filterOrder() {
         return 10000;
     }
-
+    /**
+     * 是否应该执行该过滤器，如果是false，则不执行该filter
+     */
     @Override
     public boolean shouldFilter() {
         return true;
     }
 
-
+    /**
+     * 执行业务操作，可执行sql,nosql等业务
+     */
     @Override
     public Object run() {
         RequestContext ctx = RequestContext.getCurrentContext();
@@ -90,6 +99,11 @@ public class AccessFilter extends ZuulFilter {
 //        return null;
     }
 
+    /**
+     * 设置返回的相应信息
+     * @param body
+     * @param code
+     */
     private void setFailedRequest(Object body, int code) {
         RequestContext ctx = RequestContext.getCurrentContext();
         ctx.setResponseStatusCode(code);
@@ -105,6 +119,11 @@ public class AccessFilter extends ZuulFilter {
         ctx.setSendZuulResponse(false);
     }
 
+    /**
+     * 判断url是否有权限
+     * @param request
+     * @return
+     */
     private boolean havePermission(HttpServletRequest request){
         String currentURL = request.getRequestURI();
         List<MenuDTO> menuDTOS = menuService.userMenus();
@@ -116,6 +135,11 @@ public class AccessFilter extends ZuulFilter {
         return false;
     }
 
+    /**
+     *判断字符串是否以制定的url开头
+     * @param requestUri
+     * @return
+     */
     private boolean isStartWith(String requestUri) {
         boolean flag = false;
         for (String s : ignorePath.split(",")) {

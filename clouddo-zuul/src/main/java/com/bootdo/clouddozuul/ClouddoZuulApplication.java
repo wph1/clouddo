@@ -21,6 +21,10 @@ public class ClouddoZuulApplication {
 		SpringApplication.run(ClouddoZuulApplication.class, args);
 	}
 
+	/**
+	 * 启动类对zuul过滤器进行注册
+	 * @return
+	 */
 	@Bean
 	public AccessFilter accessFilter(){
 		return new AccessFilter();
