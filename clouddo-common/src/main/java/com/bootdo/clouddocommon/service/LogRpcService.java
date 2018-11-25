@@ -14,4 +14,7 @@ public interface LogRpcService {
     @Async
     @PostMapping("log/save")
     R save(LogDO logDO);
+//    @Async
+    @PostMapping("log/save2")
+    R save2(LogDO logDO);
 }
