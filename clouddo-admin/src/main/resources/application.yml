@@ -11,7 +11,7 @@ spring:
   application:
     name: api-admin
   datasource:
-    url: jdbc:mysql://127.0.0.1:3306/clouddo?useUnicode=true&characterEncoding=utf8
+    url: jdbc:mysql://59.110.228.223:3306/clouddo?useUnicode=true&characterEncoding=utf8
     username: root
     password: 123456
   jackson:
@@ -23,3 +23,7 @@ mybatis:
       map-underscore-to-camel-case: true
 #logging:
 #  level: debug
+# 分布式事物
+tm:
+  manager:
+    url: http://localhost:7000/tx/manager/

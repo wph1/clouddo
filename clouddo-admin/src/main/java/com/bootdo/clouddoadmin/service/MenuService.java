@@ -37,6 +37,7 @@ public interface MenuService {
 	int remove(Long id);
 
 	int save(MenuDO menu);
+	int save2(MenuDO menu);
 
 	int update(MenuDO menu);
 

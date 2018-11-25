@@ -6,8 +6,11 @@ import com.bootdo.clouddoadmin.dao.MenuDao;
 import com.bootdo.clouddoadmin.dao.RoleMenuDao;
 import com.bootdo.clouddoadmin.domain.MenuDO;
 import com.bootdo.clouddoadmin.service.MenuService;
+import com.bootdo.clouddocommon.dto.LogDO;
 import com.bootdo.clouddocommon.dto.MenuDTO;
 import com.bootdo.clouddocommon.dto.RouterDTO;
+import com.bootdo.clouddocommon.service.LogRpcService;
+import com.codingapi.tx.annotation.TxTransaction;
 import org.apache.commons.lang.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cache.annotation.CacheEvict;
@@ -24,6 +27,8 @@ public class MenuServiceImpl implements MenuService {
     MenuDao menuMapper;
     @Autowired
     RoleMenuDao roleMenuMapper;
+    @Autowired
+    LogRpcService logRpcService;
 
     /**
      * @param
@@ -80,6 +85,20 @@ public class MenuServiceImpl implements MenuService {
     @Override
     public int save(MenuDO menu) {
         int r = menuMapper.save(menu);
+        return r;
+    }
+
+    @Override
+    @TxTransaction(isStart = true)
+    @Transactional
+    public int save2(MenuDO menu) {
+        int r = menuMapper.save(menu);
+        LogDO logDO =  new LogDO();
+        logDO.setOperation("事务");
+        logRpcService.save2(logDO);
+
+        int i=1/0;
+
         return r;
     }
 

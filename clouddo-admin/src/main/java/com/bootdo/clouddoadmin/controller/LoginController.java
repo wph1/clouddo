@@ -30,6 +30,9 @@ import java.util.Map;
  * https://blog.csdn.net/zhangxing52077/article/details/81587988
  * demo
  * https://github.com/codingapi/springcloud-lcn-demo
+ * 事务问题解决
+ * https://www.cnblogs.com/sxdcgaq8080/p/9776695.html
+ * https://www.jianshu.com/p/453741e0f28f
  * @author bootdo 1992lcg@163.com
  * @version V1.0
  */
@@ -42,18 +45,18 @@ public class LoginController {
     TokenService tokenService;
     @Autowired
     MenuService menuService;
-    @Autowired
-    LogRpcService logRpcService;
+//    @Autowired
+//    LogRpcService logRpcService;
     @Log("登录")
     @PostMapping("/login")
     R login(@Valid @RequestBody LoginDTO loginDTO, HttpServletRequest request, HttpServletResponse response) {
-        MenuDO menuDo = new MenuDO();
-        menuDo.setName("wph");
-        menuService.save(menuDo);
-        int i=1/0;
-        LogDO logDO =  new LogDO();
-        logDO.setOperation("事务");
-        logRpcService.save(logDO);
+//        MenuDO menuDo = new MenuDO();
+//        menuDo.setName("wph");
+//        menuService.save2(menuDo);
+//        int i=1/0;
+//        LogDO logDO =  new LogDO();
+//        logDO.setOperation("事务");
+//        logRpcService.save(logDO);
         String username = loginDTO.getUsername().trim();
         String password = loginDTO.getPwd().trim();
         password = MD5Utils.encrypt(username, password);
