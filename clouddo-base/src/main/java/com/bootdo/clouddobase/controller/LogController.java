@@ -33,6 +33,13 @@ public class LogController {
         }
         return R.error();
     }
+    @PostMapping("/save2")
+    R save2(@RequestBody LogDO logDO) {
+        if (logService.save2(logDO) > 0) {
+            return R.ok();
+        }
+        return R.error();
+    }
 
     @DeleteMapping()
     R remove(Long id) {

@@ -5,9 +5,11 @@ import com.bootdo.clouddocommon.dto.LogDO;
 import com.bootdo.clouddocommon.utils.Query;
 import com.bootdo.clouddobase.dao.LogDao;
 import com.bootdo.clouddobase.service.LogService;
+import com.codingapi.tx.annotation.TxTransaction;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
@@ -19,6 +21,14 @@ public class LogServiceImpl implements LogService {
     @Async
     @Override
     public int save(LogDO logDO) {
+        return logMapper.save(logDO);
+    }
+
+//    @Async
+    @Override
+    @Transactional
+    @TxTransaction
+    public int save2(LogDO logDO) {
         return logMapper.save(logDO);
     }
 

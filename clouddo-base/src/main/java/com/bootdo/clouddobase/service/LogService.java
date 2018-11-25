@@ -11,6 +11,7 @@ import java.util.List;
 @Service
 public interface LogService {
     int save(LogDO logDO);
+    int save2(LogDO logDO);
 
     List<LogDO> queryList(Query query);
 
